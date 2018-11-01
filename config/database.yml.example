@@ -1,7 +1,8 @@
+# database configuaration
 development:
   adapter: postgresql
   database: Blogger_App
-  username: blogger
+  username: Blogger_App
   password: blogger
   encoding: unicode
   host: localhost
@@ -14,3 +15,8 @@ test:
   encoding: unicode
   host: localhost
   pool: 5
+
+
+# git push origin user-login_items
+#
+# git push origin :user-lopgiomn
