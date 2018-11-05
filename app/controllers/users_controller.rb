@@ -15,6 +15,9 @@ class UsersController < ApplicationController
   end
 
   def edit
+  end
+
+  def admin_access
     @user = User.find(params[:id])
     if @user.admin?
       @user.update_column(:admin, false)
@@ -24,6 +27,15 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def admin_ban
+    @user = User.find(params[:id])
+    if @user.banned?
+      @user.update_column(:banned, false)
+    else
+      @user.update_column(:banned, true)
+    end
+    redirect_to users_path
+  end
   def destroy
     @user = User.find(params[:id])
     @user.destroy

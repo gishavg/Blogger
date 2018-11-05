@@ -4,13 +4,23 @@
     <div class="p-3 d-inline-block navbar float-right">
       <%= link_to "Remove User", user_path(@user), data: { confirm: "Are you sure?" }, method: :delete %>
     </div>
+
     <div class="p-3 d-inline-block navbar float-right">
       <% if @user.admin? %>
-        <%= link_to "cancel Admin_Role", edit_user_path(@user.id), data: { confirm: "Are you sure?" }, method: :get %>
+        <%= link_to "cancel Admin_Role", admin_access_user_path, data: { confirm: "Are you sure?" }, method: :post %>
       <% else %>
-        <%= link_to "Assign Admin_Role", edit_user_path(@user.id), data: { confirm: "Are you sure?" }, method: :get %>
+        <%= link_to "Assign Admin_Role", admin_access_user_path, data: { confirm: "Are you sure?" }, method: :post %>
       <% end %>
     </div>
+
+    <div class="p-3 d-inline-block navbar float-right">
+      <% if @user.banned? %>
+        <%= link_to "Unban User", admin_ban_user_path, data: { confirm: "Are you sure?" }, method: :post %>
+      <% else %>
+        <%= link_to "Ban User", admin_ban_user_path, data: { confirm: "Are you sure?" }, method: :post %>
+      <% end %>
+    </div>
+
     <div class="p-3 d-inline-block navbar float-right">
       <%= link_to 'Back', users_path %>
     </div>

@@ -16,6 +16,9 @@
         <% if user.admin? %>
           <td class="p-3 text-success"><%= "Admin" %></td>
         <% end %>
+        <% if user.banned? %>
+          <td class="p-3 text-danger"><%= "Banned" %></td>
+        <% end %>
         <!-- <td class="p-3"><%= link_to "Edit User", user_path(user.id) %></td> -->
       <% end %>
     </tr>
