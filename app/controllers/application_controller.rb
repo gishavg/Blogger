@@ -1,9 +1,12 @@
 class ApplicationController < ActionController::Base
+  # protect_from_forgery
+  # before_action :current_user
+  #
+  # def current_user
+  #   @user = session[:user]
+  # end
+
   def after_sign_in_path_for(resource)
-    if resource.class == User
-      users_path
-    # elsif resource.class == User
-    #   dashboard_index_path
-    end
+    users_path if resource.class == User
   end
 end

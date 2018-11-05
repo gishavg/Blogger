@@ -3,15 +3,21 @@
   <%= render 'devise/menu/login_items' %>
 </div>
 
-<h1>Listing Users</h1>
+<h1 class="text-center"><%= current_user.first_name + " " + current_user.last_name %></h1>
 <table>
   <tr>
     <th>User</th>
   </tr>
-
   <% @user.each do |user| %>
     <tr>
-      <td><%= link_to user.email, user_path(user.id) %>
+      <% if current_user.email != user.email %>
+        <td class="p-3"><%= user.email %></td>
+        <td class="p-3"><%= link_to "View User", user_path(user.id) %></td>
+        <% if user.admin? %>
+          <td class="p-3 text-success"><%= "Admin" %></td>
+        <% end %>
+        <!-- <td class="p-3"><%= link_to "Edit User", user_path(user.id) %></td> -->
+      <% end %>
     </tr>
   <% end %>
 </table>
