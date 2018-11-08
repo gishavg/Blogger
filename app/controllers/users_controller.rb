@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @posts = Post.all.order("created_at DESC")
   end
 
   def edit
@@ -27,21 +28,25 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-  def admin_ban
+  def admin_ban_user
+    @user = User.find(params[:id])
+  end
+
+  def ban_user
     @user = User.find(params[:id])
     if @user.banned?
-      @user.update_column(:banned, false)
+      User.where(:id => @user.id).update_all({:banned => false, :ban_period => Time.now - 1.day})
     else
-      @user.update_column(:banned, true)
+      @userdata = params[:user][:ban_period].to_i
+      User.where(:id => @user.id).update_all({:banned => true, :ban_period => @userdata.days.from_now})
     end
     redirect_to users_path
   end
+
   def destroy
     @user = User.find(params[:id])
     @user.destroy
 
     redirect_to @user
   end
-
-
 end

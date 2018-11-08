@@ -33,13 +33,96 @@
   box-shadow: none;
 }
 
+.ban_container {
+  width: 50%;
+  margin-top: 100px;
+}
 
+.ban_period {
+  background: none;
+  font-size: 1.0rem;
+  border-width: 1;
+  border-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  line-height: 1.9;
+  width: 100%;
+  box-shadow: none;
+}
 
-// .first_name {
-//
-//   // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.ban_label {
+  font-size: 1.2rem;
+  color: grey;
+}
+
+.title {
+  text-align: center;
+  overflow: hidden;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+.posts {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: 300px;
+  height: 350px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border: 1px solid rgb(68, 68, 68);
+  border-radius: 5px;
+  margin: 20px 0px;
+  position: relative;
+}
+
+.post_card_container {
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.image_container {
+  overflow: hidden;
+}
+
+.image {
+  height: 175px;
+  width: 300px;
+}
+
+.body-trunc {
+  margin-left: 10px;
+  margin-right: 10px;
+  // overflow-y: scroll;
+  word-wrap: break-word;
+
+}
+
+.body-auth {
+  text-align: center;
+  overflow: hidden;
+  font-weight: bold;
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  margin-left: 80px;
+  word-wrap: break-word;
+}
+// .wrapper {
+//   position: absolute;
 // }
-
-// .last_name {
-//   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+//
+// .image {
+//   position: relative;
 // }

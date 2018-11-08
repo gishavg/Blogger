@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  userid: 
+  banperiod: 2018-11-06 11:00:44
+
+two:
+  userid: 
+  banperiod: 2018-11-06 11:00:44
