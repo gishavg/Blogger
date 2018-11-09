@@ -25,9 +25,11 @@
     <%= render 'devise/menu/registration_items' %>
     <div class="p-3 d-inline-block navbar float-right">
       <%= link_to 'New Post', new_user_post_path(@user.id), method: :get, class:"text-success" %>
+      <% if !current_user.admin? %>
+        <a href='#' class="p-3 allfeed" onclick="onClicked(event)"> All Feed </a>
+      <% end %>
     </div>
   <% end %>
-
 </div>
 
 <%= @user.first_name  + " " + @user.last_name %>
@@ -36,54 +38,61 @@
     <h1>Blog</h1>
     <p>New posts will be displayed in realtime</p>
   </div>
+
   <div class="posts" id="post_section">
     <% @posts.each do |post| %>
-      <%= link_to user_path(@user) do %>
-        <div class="post_card_container">
-          <% unless post.private? && current_user.id != post.user_id && !current_user.admin?%>
-            <% if current_user.admin? && post.user_id == @user.id %>
-              <div class="post-card">
-                <div class="image_container">
-                  <% if post.image.attached? %>
-                    <%= image_tag url_for(post.image), class: "image" %>
-                  <% end %>
-                </div>
-                <div class="title">
-                  <h2><%= post.title %></h2>
-                </div>
-                <div class="body-trunc">
-                  <p><%= post.body %></p>
-                </div>
-                <div class="footer body-auth">
-                  <p><%= post.author %></p>
-                </div>
-              </div>
-            <% else %>
-              <div class="post-card">
-                <div class="image_container">
-                  <% if post.image.attached? %>
-                    <%= image_tag url_for(post.image), class: "image" %>
-                  <% end %>
-                </div>
-                <div class="title">
-                  <h2><%= post.title %></h2>
-                </div>
-                <div class="body-trunc">
-                  <p><%= post.body %></p>
-                </div>
-                <div class="footer body-auth">
-                  <p><%= post.author %></p>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
+      <div class="post_card_container">
+        <% unless post.private? && current_user.id != post.user_id && !current_user.admin?|| post.user_id != @user.id%>
+          <div class="post-card">
+            <div class="image_container">
+              <% if post.image.attached? %>
+                <%= image_tag url_for(post.image), class: "image" %>
+              <% end %>
+            </div>
+            <div class="title">
+              <h2><%= post.title %></h2>
+            </div>
+            <div class="body-trunc">
+              <p><%= post.body %></p>
+            </div>
+            <div class="footer body-auth">
+              <p><%= post.author %></p>
+              <p><%= post.private %></p>
+
+            </div>
+          </div>
           <% if current_user.admin? || post.user_id == @user.id %>
             <div class="delete">
               <%= link_to "Delete Post", user_post_path(@user, post), data: { confirm: "Are you sure?" }, method: :delete %>
             </div>
           <% end %>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="posts hidden" id="post_public_section">
+    <% @posts.each do |post| %>
+        <% if current_user.id != post.user_id && !post.private? %>
+          <div class="post-card">
+            <div class="image_container">
+              <% if post.image.attached? %>
+                <%= image_tag url_for(post.image), class: "image" %>
+              <% end %>
+            </div>
+            <div class="title">
+              <h2><%= post.title %></h2>
+            </div>
+            <div class="body-trunc">
+              <p><%= post.body %></p>
+            </div>
+            <div class="footer body-auth">
+              <p><%= post.author %></p>
+              <p><%= post.private %></p>
+              <p><%= post.user_id %></p>
+
+            </div>
+          </div>
+        <% end %>
     <% end %>
   </div>
 </div>

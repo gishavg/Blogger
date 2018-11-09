@@ -104,7 +104,6 @@ img {
 .body-trunc {
   margin-left: 10px;
   margin-right: 10px;
-  // overflow-y: scroll;
   word-wrap: break-word;
 
 }
@@ -119,10 +118,7 @@ img {
   margin-left: 80px;
   word-wrap: break-word;
 }
-// .wrapper {
-//   position: absolute;
-// }
-//
-// .image {
-//   position: relative;
-// }
+
+.hidden {
+  display: none;
+}

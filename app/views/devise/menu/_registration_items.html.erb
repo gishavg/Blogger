@@ -2,6 +2,9 @@
   <% if user_signed_in? %>
       <%= link_to('Change username And Password', edit_user_registration_path) %>
   <% else %>
-      <%= link_to('Sign_Up', new_user_registration_path)  %>
+    <%= link_to new_user_registration_path do %>
+      <i class="fa fa-sign-in" style="font-size:20px"></i>
+      <span>Sign Up</span>
+    <% end %>
   <% end %>
 </div>
