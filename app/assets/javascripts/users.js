@@ -14,4 +14,5 @@
 function onClicked (event) {
   event.preventDefault();
   $('div#post_public_section').toggle();
+  $('#doticon').toggle();
 }

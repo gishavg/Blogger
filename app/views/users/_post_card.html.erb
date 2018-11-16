@@ -1,0 +1,30 @@
+
+<div class="post-card">
+  <div class="image_container">
+    <% if post.image.attached? %>
+      <%= image_tag url_for(post.image), class: "image" %>
+    <% end %>
+  </div>
+  <div class="title">
+    <h2><%= post.title %></h2>
+  </div>
+  <div class="body-trunc">
+    <p><%= post.body %></p>
+  </div>
+  <div class="footer body-auth">
+    <p><%= post.author %></p>
+    <p><%= post.private %></p>
+    <p><%= post.user_id %></p>
+  </div>
+</div>
+<div>
+  <p><span class="text-">Posted by: <%= link_to (post.author), user_path(post.user_id) %><span></p>
+  <p><span class="text-"><%= link_to ("comments: "), user_post_comments_path(@user.id,post.id) %><span></p>
+  <%= render :partial => '/comments/new', locals: {user_id: @user.id, post_id: post.id} %>
+  <% parents = post.comments.where("parent_id IS ?",nil) %>
+  <% if parents.length !=0 %>
+    <ul><%= render parents %></ul>
+  <% end %>
+  <!-- <%= render post.comments %> -->
+
+</div>

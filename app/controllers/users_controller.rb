@@ -49,4 +49,17 @@ class UsersController < ApplicationController
 
     redirect_to @user
   end
+
+  # def following
+  #   @title = "Following"
+  #   @user  = User.find(params[:id])
+  #   # @users = @user.following.paginate(page: params[:page])
+  #   render partial: 'show_follow'
+  # end
+
+  # def followers
+  #   @title = "Followers"
+  #   @user  = User.find(params[:id])
+  #   @users = @user.following?(@user)
+  # end
 end

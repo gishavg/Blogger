@@ -1,0 +1,9 @@
+<%= form_with scope: :comment, url: user_post_comment_replies_path, class:"col-sm-12 form_container", local: true do |form| %>
+  <p>
+    <%= form.label :Comment %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
