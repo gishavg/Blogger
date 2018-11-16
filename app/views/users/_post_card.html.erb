@@ -19,7 +19,12 @@
 </div>
 <div>
   <p><span class="text-">Posted by: <%= link_to (post.author), user_path(post.user_id) %><span></p>
-  <p><span class="text-"><%= link_to ("comments: "), user_post_comments_path(@user.id,post.id) %><span></p>
+  <p>
+    <span><i class="fa fa-comment"></i></span>
+    <span class="text-"><%= link_to ("comments: "), user_post_comments_path(@user.id,post.id) %><span>
+    <span><i class="fa fa-thumbs-up"></i></span>
+  </p>
+
   <%= render :partial => '/comments/new', locals: {user_id: @user.id, post_id: post.id} %>
   <% parents = post.comments.where("parent_id IS ?",nil) %>
   <% if parents.length !=0 %>
