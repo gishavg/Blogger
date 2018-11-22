@@ -1,0 +1,40 @@
+<div class="">
+  <%= form_with scope: :post, url: user_post_index_path, class:"form_container", local: true do |form| %>
+  <table class="table_container">
+    <tr class="row_container">
+      <div class="form-group">
+        <td><%= form.text_field :title, class:"form-control w-100", placeholder:"Title", required:true %></td>
+      </div>
+    </tr>
+
+    <tr class="row_container">
+    <div class="form-group">
+      <td><%= form.hidden_field :author, class:"form-control", placeholder:"Author", :value => @user.email, :readonly => true %></td>
+    </div>
+    </tr>
+    <tr class="row_container">
+    <div class="form-group">
+      <td><%= form.text_area :body, class:"form-control", placeholder:"Contents", col:"30", rows:"3", maxlength:"100", required:true %></td>
+    </div>
+    </tr>
+    <tr class="row_container">
+      <div class="form-group">
+        <td><%= form.file_field :image, class:"form-control"%></td>
+      </div>
+    </tr>
+    <tr class="row_container">
+      <td>
+        <div class="p-2 form-inline">
+          <%= form.label :private, placeholder:"Private", class:"m-2" %>
+          <%= form.check_box :private, class:"w-25 form-control checkbox" %>
+        </div>
+      </td>
+    </tr>
+    <tr class="row_container">
+    <div class="from-group">
+      <td><%= form.submit :createpost, class:"p-2 w-100 bg-primary" %></td>
+    </div>
+    </tr>
+  </table>
+  <% end %>
+</div>

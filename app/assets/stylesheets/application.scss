@@ -17,11 +17,10 @@
 
 html {
   min-width: 100%;
-  min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  background-image: image-url('');
   background-repeat:no-repeat;
   background-size:cover;
 }
@@ -34,4 +33,20 @@ body {
 .logo_image1 {
   width: 20%;
   height: 20%;
+}
+
+.navbar_container {
+  background-color: gray;
+}
+
+header {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.nav_color a {
+  color: #e6e6e6;
+}
+.sign_up_navbar {
+  justify-content: flex-end;
 }

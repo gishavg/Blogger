@@ -11,8 +11,19 @@
   //   $("#post_public_section").show();
   // });
 
-function onClicked (event) {
-  event.preventDefault();
-  $('div#post_public_section').toggle();
-  $('#doticon').toggle();
-}
+// function onClicked (event) {
+//   event.preventDefault();
+//   var request = $.ajax  ({
+//                             url: "users/allfeed",
+//                             type: "GET",
+//                             data: {type : "allfeed"}
+//                         });
+// }
+// request.done(function(msg) {
+//   $("#log").html( msg );
+// });
+//
+// request.fail(function(jqXHR, textStatus) {
+//   alert( "Request failed: " + textStatus );
+// });
+// }

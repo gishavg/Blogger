@@ -1,10 +1,8 @@
-<div class="p-3 d-inline-block navbar float-right">
-  <% if user_signed_in? %>
-    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-  <% else %>
-    <%= link_to new_user_session_path do %>
-      <i class="fa fa-user" style="font-size:20px"></i>
-      <span>Login</span>
-    <% end %>
+<% if user_signed_in? %>
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+<% else %>
+  <%= link_to new_user_session_path do %>
+    <i class="fa fa-user" style="font-size:20px"></i>
+    <span>Login</span>
   <% end %>
-</div>
+<% end %>

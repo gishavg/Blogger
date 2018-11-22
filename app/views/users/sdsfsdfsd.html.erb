@@ -1,0 +1,92 @@
+<div class="">
+  <img src="<%= asset_path( 'camera.jpg' ) %>", class="camera_image" />
+  <%= @user.first_name  + " " + @user.last_name %>
+  <span class="text-primary p-2"><%= @user.email %></span>
+</div>
+
+<div class="">
+  <%= link_to 'New Post', new_user_post_path(@user.id), method: :get, class:"text-success" %>
+</div>
+</div>
+
+
+
+
+
+<div class="wrapper">
+
+
+  <div class="posts" id="post_section">
+    <% @posts.each do |post| %>
+      <div class="post_card_container">
+        <% unless post.private? && current_user.id != post.user_id && !current_user.admin?|| post.user_id != @user.id%>
+        <%= render partial: 'post_card', locals: { post: post } %>
+          <% if current_user.admin? || post.user_id == @user.id %>
+            <div class="delete">
+              <%= link_to "Delete Post", user_post_path(@user, post), data: { confirm: "Are you sure?" }, method: :delete %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="posts hidden" id="post_public_section">
+    <% @posts.each do |post| %>
+        <% if current_user.id != post.user_id %>
+          <% @u = User.find(post.user_id) %>
+          <% if current_user.following?(@u) %>
+            <%= render partial: 'post_card', locals: { post: post } %>
+          <% elsif !post.private? %>
+            <%= render partial: 'post_card', locals: { post: post } %>
+          <% end %>
+        <% end %>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="post-card col-sm-6">
+  <div class="image_container">
+    <% if post.image.attached? %>
+      <%= image_tag url_for(post.image), class: "image" %>
+    <% end %>
+  </div>
+
+</div>
+<div>
+  <p>
+    <span><i class="fa fa-comment"></i></span>
+    <span class="text-"><%= link_to ("comments: "), user_post_comments_path(@user.id,post.id) %><span>
+    <span><i class="fa fa-thumbs-up"></i></span>
+  </p>
+
+  <%= render :partial => '/comments/new', locals: {user_id: @user.id, post_id: post.id} %>
+  <% parents = post.comments.where("parent_id IS ?",nil) %>
+  <% if parents.length !=0 %>
+    <ul><%= render parents %></ul>
+  <% end %>
+  <%= render post.comments %>
+
+</div>-->

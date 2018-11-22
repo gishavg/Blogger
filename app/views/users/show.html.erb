@@ -1,86 +1,128 @@
-<div class="container-fluid">
-  <%= render 'devise/menu/login_items' %>
-  <% if current_user.admin? %>
-    <div class="p-3 d-inline-block navbar float-right">
-      <%= link_to "Remove User", user_path(@user), data: { confirm: "Are you sure?" }, method: :delete %>
-    </div>
-    <div class="p-3 d-inline-block navbar float-right">
-      <% if @user.admin? %>
-        <%= link_to "cancel Admin_Role", admin_access_user_path, data: { confirm: "Are you sure?" }, method: :post %>
-      <% else %>
-        <%= link_to "Assign Admin_Role", admin_access_user_path, data: { confirm: "Are you sure?" }, method: :post %>
-      <% end %>
-    </div>
-    <div class="p-3 d-inline-block navbar float-right">
-      <% if @user.banned? %>
-        <%= link_to "Unban User", ban_user_user_path, data: { confirm: "Are you sure?" }, method: :post %>
-      <% else %>
-        <%= link_to "Ban User", admin_ban_user_user_path, method: :get %>
-      <% end %>
-    </div>
-    <div class="p-3 d-inline-block navbar float-right">
-      <%= link_to 'Back', users_path %>
-    </div>
-  <% else %>
-    <%= render 'devise/menu/registration_items' %>
-    <div class="p-3 d-inline-block navbar float-right">
-      <%= link_to 'New Post', new_user_post_path(@user.id), method: :get, class:"text-success" %>
-      <% if !current_user.admin? %>
-        <a href='#' class="p-3 allfeed" onclick="onClicked(event)"> All Feed </a>
-      <% end %>
-    </div>
-  <% end %>
-</div>
+<header class="m-1 navbar bg-dark">
+  <div class="d-inline-block sign_up_navbar ">
+    <button type="button" class="col-sm-3 btn btn-dark float-right">
+      <a class="dropdown-toggle" href="#" id="navbardrop" class="logout" data-toggle="dropdown">
+        <span><img src="<%= asset_path( 'logoout.png' ) %>", class="logoutimage bg-light" /></span>
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">
+          <%= link_to('Edit Profile', edit_user_registration_path) %>
+        </a>
+        <a class="dropdown-item" href="#">
+            <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+        </a>
+      </div>
+    </button>
+  </div>
+</header>
 
-<%= @user.first_name  + " " + @user.last_name %>
-<div class="wrapper">
-  <div class="title">
-    <h1>Blog</h1>
-    <p>New posts will be displayed in realtime</p>
-  </div>
-  <div>
-      <strong id="following" class="stat">
-        <%= @user.following.count %>
-      </strong>
-      following
-      <strong id="followers" class="stat">
-        <%= @user.followers.count %>
-      </strong>
-      followers
-    <% unless current_user.id == @user.id %>
-      <div id="follow_form">
-        <% if current_user.following?(@user) %>
-          <%= render 'unfollow' %>
-        <% else %>
-          <%= render 'follow' %>
-        <% end %>
+<div class="m-3 container-fluid main_container">
+  <div class="profile_container col-sm-3 border-right">
+    <div class="profile">
+      <div class="logo_name">
+        <h5>
+          <span><img src="<%= asset_path( 'Blogger.png' ) %>", class="logo_image" /></span>
+          <span><%= @user.first_name  + " " + @user.last_name %></span>
+        </h5>
       </div>
-    <% end %>
-  </div>
-  <div class="posts" id="post_section">
-    <% @posts.each do |post| %>
-      <div class="post_card_container">
-        <% unless post.private? && current_user.id != post.user_id && !current_user.admin?|| post.user_id != @user.id%>
-        <%= render partial: 'post_card', locals: { post: post } %>
-          <% if current_user.admin? || post.user_id == @user.id %>
-            <div class="delete">
-              <%= link_to "Delete Post", user_post_path(@user, post), data: { confirm: "Are you sure?" }, method: :delete %>
-            </div>
-          <% end %>
-        <% end %>
+      <div>
+        <h6 class="text-primary p-2"><%= @user.email %></h6>
       </div>
-    <% end %>
-  </div>
-  <div class="posts hidden" id="post_public_section">
-    <% @posts.each do |post| %>
-        <% if current_user.id != post.user_id %>
-          <% @u = User.find(post.user_id) %>
-          <% if current_user.following?(@u) %>
-            <%= render partial: 'post_card', locals: { post: post } %>
-          <% elsif !post.private? %>
-            <%= render partial: 'post_card', locals: { post: post } %>
+    </div>
+    <div class="follow">
+      <div class="p-3 text-center col-sm-6">
+        <strong id="following" class="stat">
+          <%= @user.following.count %>
+        </strong></br>
+        following
+      </div>
+      <div class="p-3 text-center col-sm-6">
+          <strong id="followers" class="stat">
+            <%= @user.followers.count %>
+          </strong><br>
+          followers
+      </div>
+    </div>
+    <div class="follow_button">
+      <% unless current_user.id == @user.id %>
+        <div id="follow_form">
+          <% if current_user.following?(@user) %>
+            <%= render 'unfollow' %>
+          <% else %>
+            <%= render 'follow' %>
           <% end %>
-        <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div>
+      <% if current_user == @user %>
+        <%= button_to 'New Post', new_user_post_path(@user.id), method: :get, class:"p-2 bg-success w-100", remote:true %>
+      <% end %>
+    </div>
+    <div class= "newpost"></div>
+    <div class="h6 p-3 lead">
+      <% if current_user.admin? %>
+        <div class="d-inline-block float-left">
+          <%= link_to "View Users", users_path, method: :get %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="post_container col-sm-9">
+    <% if current_user != @user %>
+      <div id="link_path">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><%= link_to "Home", users_path, method: :get %></li>
+            <li class="breadcrumb-item"><%= link_to current_user.first_name, current_user, method: :get %></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= @user.first_name %></li>
+          </ol>
+        </nav>
+      </div>
+    <% else %>
+    <div class="btn-group btn-group-sm">
+      <button type="button" class="p-3 btn btn-dark">
+        <%= link_to "All Feed", user_allfeed_path(@user), method: :get, remote:true, class:"text-light" %>
+      </button>
+      <button type="button" class="p-2 btn btn-dark">
+        <%= link_to "Personal Feed", user_personalfeed_path(@user), method: :get, remote:true, class:"text-light" %>
+
+      </button>
+      <button type="button" class="p-2 btn btn-dark">
+        <a class="dropdown-toggle" href="#" id="navbardrop" class="allfeed" data-toggle="dropdown">
+          <span class="allfeed">Filter by</span>
+        </a>
+        <div class="dropdown-menu">
+          <%= link_to "Last Day", user_lastday_path(@user), method: :get, remote:true, class:"text-dark" %>
+
+          <a class="dropdown-item" href="#">Last Day</a>
+          <a class="dropdown-item" href="#">Last Week</a>
+          <a class="dropdown-item" href="#">Month</a>
+          <a class="dropdown-item" href="#">Year</a>
+
+        </div>
+      </button>
+      <button type="button" class="p-2 btn btn-dark">
+        <a class="dropdown-toggle" href="#" id="navbardrop" class="allfeed" data-toggle="dropdown">
+          <span class="allfeed">Sort by</span>
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Time</a>
+          <a class="dropdown-item" href="#">Likes</a>
+          <a class="dropdown-item" href="#">Views</a>
+        </div>
+      </button>
+    </div>
     <% end %>
+    <div><p><div id="log">
+    </div></p></div>
+    <div class="container-fluid main_post_container">
+        <div class="show">
+          <%= render partial: 'showpost', locals: { posts: @posts } %>
+        </div>
+        <div >
+
+        </div>
+    </div>
   </div>
 </div>

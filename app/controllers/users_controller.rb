@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def index
     if User.count(:all) == 1
       current_user.update_attribute :admin, true
@@ -12,7 +13,42 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = Post.all.order("created_at DESC")
+    if current_user.id == @user.id || current_user.following?(@user)
+      @posts = @user.posts.all.order('created_at DESC')
+    else
+      @posts = @user.posts.all.order('created_at DESC').where('private IS ?', false)
+    end
+    @p = Post.all.order('created_at DESC').where('private IS ?', false)
+    @posts = @posts | @p
+  end
+
+  def allfeed
+    @user = User.find(params[:user_id])
+    @posts = @user.posts.all.order('created_at DESC')
+    @p = Post.all.order('created_at DESC').where('private IS ?', false)
+    @posts = @posts | @p
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def personalfeed
+    @user = User.find(params[:user_id])
+    @p = @user.posts.all.order('created_at DESC')
+    @u = @user.following
+    @posts = []
+    @u.each do |user|
+      posts = user.posts.all.order('created_at DESC')
+      @posts += posts if posts
+    end
+    @posts = @posts | @p
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def lastday
+
   end
 
   def edit

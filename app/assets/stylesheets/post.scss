@@ -2,20 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-    .post-form{
-      display: flex;
-      width: 50%;
-      flex-direction: column;
-      margin: 20px auto;
-    }
-    .form-group{
-      display: flex;
-      justify-content: space-between;
-      margin: 5px 0px;
-      align-items: center;
+    .newpost {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
-    input[type="submit"]{
+    input[type="submit"] {
       // background-color: #333333;
       border: none;
       color: white;
@@ -26,23 +17,37 @@
       font-size: 16px;
     }
 
-    .form_container {
-      margin: 2px;
-      border: 10px;
-      padding: 2px;
+    input[type="checkbox"]:focus {
+      outline: none;
+      border: none !important;
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      box-shadow: none !important;
+    }
+
+    .image {
+      width: 100%;
+      height: 100%;
+      border-radius: 20%;
+      align-items: center;
+    }
+
+    .commentimage {
+      width: 12%;
+      height: 12%;
+    }
+
+    .logoimage {
+      width: 5%;
+      height: 5%;
+    }
+
+    .post_card_container {
+      background-color: rgb(247, 249, 249);
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
     }
 
-    .table_container {
-       margin-left: 70px;
-    }
-    .row_container {
-      margin: 5px;
-      border: 10px;
-      padding: 2px;
-    }
-
-    .delete {
-      height: 30px;
+    .postlikecontainer {
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }

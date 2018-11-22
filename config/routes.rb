@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   resources :users do
+    match 'allfeed', via: [:get]
+    match 'personalfeed', via: [:get]
+    match 'lastday', via: [:get]
     member do
       match 'admin_access', via: [:post]
       match 'admin_ban_user', via: [:get]
