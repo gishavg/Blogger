@@ -1,4 +1,4 @@
-<div class="post-card col-sm-12" style="padding:0">
+<div class="post-card col-sm-12" style="padding:0; margin-bottom:20px;">
   <div class="logoname">
     <h5>
       <span><img src="<%= asset_path( 'img1.png' ) %>", class="logoimage" /></span>
@@ -9,7 +9,7 @@
     </h5>
   </div>
   <div class="post_card_container row col-sm-12">
-    <div class="post col-sm-6">
+    <div class="post col-sm-5">
       <div class="title">
         <h2><%= post.title %></h2>
       </div>
@@ -27,26 +27,38 @@
         <%= image_tag url_for(post.image), class: "image" %>
       <% end %>
     </div>
+    <div class="col-sm-1 p-1 verticaly">
+      <% if current_user.admin? || post.user_id == @user.id %>
+        <button type="button" class="p-2 btn btn-light">
+          <a class="" href="#" id="navbardrop" class="allfeed" data-toggle="dropdown">
+            <span><i class="fa fa-ellipsis-v dot text-dark"></i></span>
+          </a>
+          <div class="dropdown-menu">
+            <div class="delete">
+              <%= link_to "Delete Post", user_post_path(@user, post), data: { confirm: "Are you sure?" }, method: :delete, class: "commentlink text-secondary" %>
+            </div>
+          </div>
+        </button>
+      <% end %>
+    </div>
   </div>
   <div class="postlikecontainer row col-sm-12">
     <div class="p-2 col-sm-6 d-flex flex-row">
-      <%= link_to '#', :class => 'button white' do %>
+      <%= link_to user_post_comments_path(@user,post.id), :class => 'button white commentlink', remote: true do %>
       <span class="text-dark"><i class="fa fa-comments-o" style="font-size:20px;color:black"></i>
-        Comments<%user_post_comments_path(@user.id,post.id) %>
+        Comments
       </span>
       <% end %>
     </div>
     <div class="p-2 col-sm-6 d-flex flex-row-reverse">
-      <span class="text-dark"><i class="fa fa-thumbs-o-up" style="font-size:20px;color:black"></i>
-      Like </span>
+      <span class="text-dark like" data-id="<%= current_user.id %>" post-id="<%= post.id %>" data-type="post"><i class="fa fa-thumbs-o-up" style="font-size:20px;color:black"></i>
+        Like
+      </span>
+      <span class="text-dark unlike" data-id="<%= current_user.id %>" post-id="<%= post.id %>" data-type="post"><i class="fa fa-thumbs-down" style="font-size:20px;color:black"></i>
+        Unlike
+      </span>
     </div>
   </div>
-  <% time =  (Time.parse(DateTime.now.to_s) - Time.parse(post.created_at.to_s))/3600 %>
-
-    <%= render :partial => '/comments/new', locals: {user_id: post.user_id, post_id: post.id} %>
-    <% parents = post.comments.where("parent_id IS ?",nil) %>
-    <% if parents.length !=0 %>
-      <ul><%= render parents %></ul>
-    <% end %>
-    <!-- <%= render post.comments %> -->
+  <div class="commentbox_container row col-sm-12 comments_<%= post.id %>" style="margin:0;padding:0">
+  </div>
 </div>

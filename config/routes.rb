@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+  get 'likes/destroy'
   get 'bloggers/index'
   devise_for :admins
   get 'users/index'
@@ -22,6 +24,7 @@ Rails.application.routes.draw do
       end
     end
     resources :relationships, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy] 
   end
   root 'bloggers#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

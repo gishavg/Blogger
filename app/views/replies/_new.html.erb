@@ -1,9 +1,7 @@
 <%= form_with scope: :comment, url: user_post_comment_replies_path, class:"col-sm-12 form_container", local: true do |form| %>
-  <p>
-    <%= form.label :Comment %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
+<div class="form-group col-sm-12" style="margin:0;padding:0">
+  <%= form.text_area :body, class:"form-controller replybox col-sm-11 m-2 p-2", id:"replyarea", rows:"1", col:"100",placeholder: "Write a reply..", autofocus:true %>
+</div>
+<%= form.submit :save_reply, id:"replybutton" %>
+<p class="small text-secondary">Press enter to post</p>
 <% end %>

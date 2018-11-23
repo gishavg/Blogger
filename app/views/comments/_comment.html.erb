@@ -1,21 +1,22 @@
 <div class="well">
-  <p class="text-muted">Added by <strong><%= comment.author %></strong> on
+  <p class="text-muted"><span><img src="<%= asset_path( 'reply.png' ) %>", class="replyimage bg-light" /></span>Added by <strong><%= comment.author %></strong> on
     <%= l(comment.created_at, format: '%B, %d %Y %H:%M:%S') %></p>
 
   <li><blockquote>
     <p><%= comment.body %></p>
-    <p><%= button_to 'Delete Comment', user_post_comment_path(:id =>comment.id,user_id: comment.user_id,post_id: comment.post_id ),
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %></p>
+
     <div class="link">
-      <p>
-        <%= link_to 'Reply', user_post_comment_replies_path(comment_id:comment.id,user_id: comment.user_id,post_id: comment.post_id ), remote: true %>
-      </p>
+      <span class="d-inline-block">
+        <span class="p-2"><%= link_to 'Reply', user_post_comment_replies_path(comment_id:comment.id,user_id: comment.user_id,post_id: comment.post_id ), remote: true %></span>
+        <span class="p-2"><%= link_to 'Delete', user_post_comment_path(:id =>comment.id,user_id: comment.user_id,post_id: comment.post_id ),
+                   method: :delete,
+                   data: { confirm: 'Are you sure?' } %></span>
+      </span>
     </div>
     <div class= "show_<%= comment.id %>" ></div>
     <% child = comment.replies %>
     <% if child.length !=0 %>
-      <ul><%= render child %></ul>
+      <ul style="list-style-type:none"><%= render child %></ul>
     <% end %>
   </blockquote></li>
 </div>

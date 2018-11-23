@@ -4,9 +4,6 @@
 
   <li><blockquote>
     <p><%= comment.body %></p>
-    <p><%= button_to 'Delete Comment', user_post_comment_path(:id =>comment.id,user_id: comment.user_id,post_id: comment.post_id ),
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %></p>
     <div class="link">
       <p>
         <%= link_to 'Reply', user_post_comment_replies_path(comment_id:comment.id,user_id: comment.user_id,post_id: comment.post_id ), remote: true %>

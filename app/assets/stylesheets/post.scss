@@ -37,6 +37,10 @@
       height: 12%;
     }
 
+    .commentlink {
+      text-decoration: none !important;
+    }
+
     .logoimage {
       width: 5%;
       height: 5%;
@@ -50,4 +54,18 @@
 
     .postlikecontainer {
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .verticaly {
+      // display: flex !important;
+      // flex-direction: row-reverse !important;
+    }
+
+    .dot {
+      width: 10%;
+      height: 10%;
+    }
+
+    .unlike {
+      display: none;
     }

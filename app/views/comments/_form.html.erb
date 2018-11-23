@@ -1,10 +1,7 @@
-
-<%= form_with scope: :comment, url: user_post_comments_path(user_id: user_id, post_id: post_id), class:"col-sm-12 form_container", local: true do |form| %>
-  <p>
-    <%= form.label :Comment %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
+<%= form_with scope: :comment, url: user_post_comments_path(user_id: user_id, post_id: post_id), class:"col-sm-12 form_container m-2", local: true do |form| %>
+  <div class="form-group col-sm-12" style="margin:0;padding:0">
+    <%= form.text_area :body, class:"form-controller commentbox col-sm-11 m-1 p-2", id:"commentarea", rows:"1",placeholder: "Write a comment..", autofocus:true %>
+  </div>
+  <%= form.submit :save_comment, id:"button" %>
+  <p class="small text-secondary">Press enter to post</p>
 <% end %>
