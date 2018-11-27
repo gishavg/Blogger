@@ -1,5 +1,5 @@
 <%= render :partial => '/comments/new', locals: {user_id: @post.user_id, post_id: @post.id} %>
-<% parents = @post.comments.where("parent_id IS ?",nil) %>
-<% if parents.length !=0 %>
-  <ul style="list-style-type:none"><%= render parents %></ul>
+<% comments = @post.comments.where("parent_id IS ?",nil) %>
+<% if comments.length !=0 %>
+  <ul style="list-style-type:none"><%= render comments %></ul>
 <% end %>

@@ -8,9 +8,18 @@
     <div class="link">
       <span class="d-inline-block">
         <span class="p-2"><%= link_to 'Reply', user_post_comment_replies_path(comment_id:comment.id,user_id: comment.user_id,post_id: comment.post_id ), remote: true %></span>
-        <span class="p-2"><%= link_to 'Delete', user_post_comment_path(:id =>comment.id,user_id: comment.user_id,post_id: comment.post_id ),
-                   method: :delete,
-                   data: { confirm: 'Are you sure?' } %></span>
+        <% if current_user.id == comment.user_id || current_user.admin%>
+          <span class="p-2"><%= link_to 'Undo', user_post_comment_path(:id =>comment.id,user_id: comment.user_id,post_id: comment.post_id ),
+                     method: :delete,
+                     data: { confirm: 'Are you sure?' } %></span>
+        <% end %>
+        <span id ="comment_<%= comment.id %>">
+          <% if comment.likes.where(user_id:current_user.id).to_a !=[] %>
+            <%= render partial: 'users/unlikecomment', locals: { comment: comment } %>
+          <% else %>
+            <%= render partial: 'users/likecomment', locals: { comment: comment } %>
+          <% end %>
+        </span>
       </span>
     </div>
     <div class= "show_<%= comment.id %>" ></div>

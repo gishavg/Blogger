@@ -1,0 +1,5 @@
+<% if params[:type] == "Post" %>
+  $(".like_<%=@post.id %>").html("<%=escape_javascript (render 'users/unlike',  post: @post) %>");
+<% else %>
+  $("#comment_<%=@post.id %>").html("<%=escape_javascript (render 'users/unlikecomment',  comment: @post) %>");
+<% end %>

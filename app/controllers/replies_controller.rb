@@ -2,9 +2,6 @@ class RepliesController < ApplicationController
   def index
     @post = Post.find(params[:post_id])
     @comments = @post.comments
-    p "====================="
-    p @replies
-    p "======================"
     @comment_id = params[:comment_id]
     @comments = @post.comments.find(params[:comment_id])
 

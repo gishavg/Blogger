@@ -1,0 +1,5 @@
+<span class="text-dark like" data-id="<%= current_user.id %>" post-id="<%= post.id %>" data-type="Post" remote=true>
+  <% if post.likes.count > 0 %><span><%= post.likes.count %></span><% end %>
+  <i class="fa fa-thumbs-o-up" style="font-size:20px;color:black"></i>
+  <span class="likelable">Like</span>
+</span>

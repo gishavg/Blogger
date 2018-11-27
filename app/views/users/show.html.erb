@@ -16,7 +16,7 @@
   </div>
 </header>
 
-<div class="m-3 container-fluid main_container">
+<div class="m-2 container-fluid main_container">
   <div class="profile_container col-sm-3 border-right">
     <div class="profile">
       <div class="logo_name">
@@ -112,16 +112,21 @@
           <a class="dropdown-item" href="#">Views</a>
         </div>
       </button>
+
     </div>
     <% end %>
     <div><p><div id="log">
+
     </div></p></div>
     <div class="container-fluid main_post_container">
         <div class="show">
+
           <%= render partial: 'showpost', locals: { posts: @posts } %>
         </div>
         <div >
-
+          <div class="p-3 float-right m-3">
+            <%= will_paginate @posts, renderer: BootstrapPagination::Rails  %>
+          </div>
         </div>
     </div>
   </div>

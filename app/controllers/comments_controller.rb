@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
     @user = User.find(params[:user_id])
     @comment = @post.comments.new(comment_params)
     @comment.user_id = current_user.id
-    @comment.author = @user.first_name + @user.last_name
+    @comment.author = current_user.first_name + current_user.last_name
     if @comment.save
       redirect_to current_user
     end

@@ -8,39 +8,40 @@
 
     </h5>
   </div>
-  <div class="post_card_container row col-sm-12">
-    <div class="post col-sm-5">
+  <div class="post_card_container col-sm-12">
+    <div class="post">
+      <div class="col-sm-2 p-1 float-right">
+        <% if current_user.admin? || post.user_id == @user.id %>
+          <button type="button" class="p-2 btn btn-light float-right">
+            <a class="" href="#" id="navbardrop" class="allfeed" data-toggle="dropdown">
+              <span class="p-3"><i class="fa fa-ellipsis-v dot text-dark" style="font-size:20px;color:black"></i></span>
+            </a>
+            <div class="dropdown-menu">
+              <div class="delete">
+                <%= link_to "Delete Post", user_post_path(@user, post), data: { confirm: "Are you sure?" }, method: :delete, class: "commentlink text-secondary" %>
+              </div>
+            </div>
+          </button>
+        <% end %>
+      </div>
       <div class="title">
         <h2><%= post.title %></h2>
       </div>
       <div class="body-trunc">
         <p><%= post.body %></p>
       </div>
-      <div class="footer body-auth">
+      <!-- <div class="footer body-auth">
         <p><%= post.author %></p>
         <p><%= post.private %></p>
         <p><%= post.user_id %></p>
-      </div>
+      </div> -->
     </div>
-    <div class="image_container col-sm-6">
+    <div class="image_container">
       <% if post.image.attached? %>
         <%= image_tag url_for(post.image), class: "image" %>
       <% end %>
     </div>
-    <div class="col-sm-1 p-1 verticaly">
-      <% if current_user.admin? || post.user_id == @user.id %>
-        <button type="button" class="p-2 btn btn-light">
-          <a class="" href="#" id="navbardrop" class="allfeed" data-toggle="dropdown">
-            <span><i class="fa fa-ellipsis-v dot text-dark"></i></span>
-          </a>
-          <div class="dropdown-menu">
-            <div class="delete">
-              <%= link_to "Delete Post", user_post_path(@user, post), data: { confirm: "Are you sure?" }, method: :delete, class: "commentlink text-secondary" %>
-            </div>
-          </div>
-        </button>
-      <% end %>
-    </div>
+
   </div>
   <div class="postlikecontainer row col-sm-12">
     <div class="p-2 col-sm-6 d-flex flex-row">
@@ -50,13 +51,13 @@
       </span>
       <% end %>
     </div>
-    <div class="p-2 col-sm-6 d-flex flex-row-reverse">
-      <span class="text-dark like" data-id="<%= current_user.id %>" post-id="<%= post.id %>" data-type="post"><i class="fa fa-thumbs-o-up" style="font-size:20px;color:black"></i>
-        Like
-      </span>
-      <span class="text-dark unlike" data-id="<%= current_user.id %>" post-id="<%= post.id %>" data-type="post"><i class="fa fa-thumbs-down" style="font-size:20px;color:black"></i>
-        Unlike
-      </span>
+    <div class="p-2 col-sm-6 d-flex flex-row-reverse like_<%= post.id %>">
+      <% if post.likes.where(user_id:current_user.id).to_a !=[] %>
+        <%= render partial: 'unlike', locals: { post: post } %>
+      <% else  %>
+        <%= render partial: 'like', locals: { post: post } %>
+      <% end %>
+
     </div>
   </div>
   <div class="commentbox_container row col-sm-12 comments_<%= post.id %>" style="margin:0;padding:0">

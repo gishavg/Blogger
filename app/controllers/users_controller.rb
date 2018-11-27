@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   def index
     if User.count(:all) == 1
       current_user.update_attribute :admin, true
@@ -19,7 +18,10 @@ class UsersController < ApplicationController
       @posts = @user.posts.all.order('created_at DESC').where('private IS ?', false)
     end
     @p = Post.all.order('created_at DESC').where('private IS ?', false)
-    @posts = @posts | @p
+    p "==============================================="
+    p @posts = @posts | @p
+    @posts = @posts.paginate(:page => params[:page], :per_page => 2)
+
   end
 
   def allfeed
