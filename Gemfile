@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'attach', '~> 1.0.1'
-
 ruby '2.5.1'
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

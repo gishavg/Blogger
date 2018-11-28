@@ -24,3 +24,16 @@ $(document).on('click','.unlike',function() {
       data: {post_id: post_id,type: type}
     })
 });
+
+
+function searchKey() {
+    var x = document.getElementById("search");
+    search_key = x.value
+    user_id = x.getAttribute("user_id");
+    url = "/users/search"
+    $.ajax({
+      url: url,
+      method: "GET",
+      data: {key: search_key,user_id: user_id}
+    })
+}

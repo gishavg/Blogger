@@ -1,6 +1,10 @@
 <header class="m-1 navbar bg-dark">
-  <div class="d-inline-block sign_up_navbar ">
-    <button type="button" class="col-sm-3 btn btn-dark float-right">
+  <div class="d-inline-block sign_up_navbar col-sm-12 ">
+    <div class="d-inline-block p-3 search col-sm-4">
+      <%= text_field_tag 'search', nil, user_id: current_user.id, placeholder: "Search ( Tag:#tagname, post:samplekey )", class:"search w-100 p-2", onkeyup:"searchKey()", onsubmit:"searchKey()", autofocus:true, remote:true %>
+      
+    </div>
+    <button type="button" class="col-sm-2 btn btn-dark float-right">
       <a class="dropdown-toggle" href="#" id="navbardrop" class="logout" data-toggle="dropdown">
         <span><img src="<%= asset_path( 'logoout.png' ) %>", class="logoutimage bg-light" /></span>
       </a>

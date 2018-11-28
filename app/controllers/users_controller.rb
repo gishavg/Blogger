@@ -18,8 +18,7 @@ class UsersController < ApplicationController
       @posts = @user.posts.all.order('created_at DESC').where('private IS ?', false)
     end
     @p = Post.all.order('created_at DESC').where('private IS ?', false)
-    p "==============================================="
-    p @posts = @posts | @p
+    @posts = @posts | @p
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
 
   end
@@ -29,6 +28,7 @@ class UsersController < ApplicationController
     @posts = @user.posts.all.order('created_at DESC')
     @p = Post.all.order('created_at DESC').where('private IS ?', false)
     @posts = @posts | @p
+    @posts = @posts.paginate(:page => params[:page], :per_page => 2)
     respond_to do |format|
       format.js
     end
@@ -44,6 +44,7 @@ class UsersController < ApplicationController
       @posts += posts if posts
     end
     @posts = @posts | @p
+    @posts = @posts.paginate(:page => params[:page], :per_page => 2)
     respond_to do |format|
       format.js
     end
@@ -88,16 +89,40 @@ class UsersController < ApplicationController
     redirect_to @user
   end
 
-  # def following
-  #   @title = "Following"
-  #   @user  = User.find(params[:id])
-  #   # @users = @user.following.paginate(page: params[:page])
-  #   render partial: 'show_follow'
-  # end
+  def search
+    @user = User.find(params[:user_id])
+    q = "%#{params[:key]}%"
+    if current_user.id == @user.id || current_user.following?(@user)
+      if params[:key][0, 1] == '#'
+        @posts = Tag.find_by("name LIKE ?",q).posts
+      else
+        @posts = @user.posts.all.order('created_at DESC').where("title LIKE ? or body LIKE ?", q, q)
+      end
+    else
+      if params[:key][0, 1] == '#'
+        @posts = Tag.find_by("name LIKE ?",q).posts.where('private IS ?', false)
+      else
+        @posts = @user.posts.all.order('created_at DESC').where('private IS ? and title LIKE ? or body LIKE ?', false, q, q)
+      end
+    end
+    @p = Post.all.order('created_at DESC').where('private IS ? and title LIKE ? or body LIKE ?', false, q, q)
+    @posts = @posts.paginate(:page => params[:page], :per_page => 2)
+    @posts = @posts | @p
+    unless @posts.any?
+      search_user(params[:key])
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
 
-  # def followers
-  #   @title = "Followers"
-  #   @user  = User.find(params[:id])
-  #   @users = @user.following?(@user)
-  # end
+  def search_user(key)
+    p key
+    p "+++++++++++++++++++++++++++++++++"
+    q = "%#{params[:key]}%"
+    @user = User.all.where("first_name LIKE ? or last_name LIKE ? or email LIKE ?", q, q, q)
+    respond_to do |format|
+      format.js
+    end
+  end
 end

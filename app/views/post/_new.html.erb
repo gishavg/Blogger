@@ -18,8 +18,13 @@
     </div>
     </tr>
     <tr class="row_container">
+    <div class="p-2 form-group large-10 large-centered columns">
+      <td><%= form.text_field :all_tags, placeholder: "Tags separated with comma" , class:"form-control" %></td>
+    </div>
+    </tr>
+    <tr class="row_container">
       <div class="form-group">
-        <td><%= form.file_field :image, class:"form-control"%></td>
+        <td><%= form.file_field :image, class:"form-control" %></td>
       </div>
     </tr>
     <tr class="row_container">
@@ -35,6 +40,7 @@
       <td><%= form.submit :createpost, class:"p-2 w-100 bg-primary" %></td>
     </div>
     </tr>
+
   </table>
   <% end %>
 </div>

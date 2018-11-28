@@ -7,7 +7,7 @@ class LikesController < ApplicationController
     else
       @post = Comment.find(params[:post_id])
     end
-    @like = @post.likes.new(:user_id => params[:user_id],
+    @like = Like.new(:user_id => params[:user_id],
                       :likable_type => params[:type],
                        :likable_id => params[:post_id]
                      )
@@ -29,8 +29,7 @@ class LikesController < ApplicationController
        likable_type: params[:type],
        likable_id: params[:post_id],
      );
-     p "===================================================destryed"
-     Like.destroy(like.id);
+     Like.destroy(like.id)
      respond_to do |format|
        format.js
      end

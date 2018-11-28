@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'bloggers/index'
   devise_for :admins
   get 'users/index'
+  get 'tags/:tag', to: 'posts#index', as: :tag
+  get 'users/search', to: 'users#search'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
@@ -24,8 +26,9 @@ Rails.application.routes.draw do
       end
     end
     resources :relationships, only: [:create, :destroy]
-    resources :likes, only: [:create, :destroy] 
+    resources :likes, only: [:create, :destroy]
   end
   root 'bloggers#index'
+  get '*unmatched_route', to: 'bloggers#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

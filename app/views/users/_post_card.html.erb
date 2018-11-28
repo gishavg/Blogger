@@ -30,11 +30,14 @@
       <div class="body-trunc">
         <p><%= post.body %></p>
       </div>
-      <!-- <div class="footer body-auth">
+      <div class="tags">
+        <%=raw post.all_tags %>
+      </div>
+      <div class="footer body-auth">
         <p><%= post.author %></p>
         <p><%= post.private %></p>
         <p><%= post.user_id %></p>
-      </div> -->
+      </div>
     </div>
     <div class="image_container">
       <% if post.image.attached? %>

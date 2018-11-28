@@ -1,4 +1,7 @@
 class PostController < ApplicationController
+  def index
+
+  end
   def new
     @user = User.find(params[:user_id])
     respond_to do |format|
@@ -25,6 +28,6 @@ class PostController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :body, :author, :image, :private)
+    params.require(:post).permit(:title, :body, :author, :image, :private, :all_tags)
   end
 end
