@@ -66,8 +66,6 @@ class UsersController < ApplicationController
         @posts = @user.posts.all.order('created_at DESC').where('created_at BETWEEN ? AND ? ', DateTime.now.beginning_of_month - 1.month, DateTime.now.beginning_of_month)
         @p = Post.all.order('created_at DESC').where('private IS ?', false).where('created_at BETWEEN ? AND ? ', DateTime.now.beginning_of_month - 1.month, DateTime.now.beginning_of_month)
         p @posts = @posts | @p
-      else
-
       end
     else
       @type = "personalfeed"
@@ -98,17 +96,13 @@ class UsersController < ApplicationController
           @posts += posts if posts
         end
         @posts = @posts | @p
-      else
-
       end
-
     end
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
     respond_to do |format|
       format.js
     end
   end
-
   def edit
   end
 
@@ -147,6 +141,9 @@ class UsersController < ApplicationController
 
   def admin_ban_user
     @user = User.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
   end
 
   def ban_user
@@ -192,7 +189,6 @@ class UsersController < ApplicationController
   end
 
   def searchuser
-    p "+++++++++++++++++++++++++++++++++"
     p q = "%#{params[:key][1..-1]}%"
     p @user = User.all.where("first_name LIKE ? or last_name LIKE ? or email LIKE ?", q, q, q)
     respond_to do |format|

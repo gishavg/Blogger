@@ -1,14 +1,4 @@
 class PostController < ApplicationController
-  def index
-
-  end
-  def new
-    @user = User.find(params[:user_id])
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def create
     @post = current_user.posts.new(post_params)
     if @post.save

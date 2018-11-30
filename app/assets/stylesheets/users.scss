@@ -17,6 +17,10 @@
    width: 49%;
 }
 
+.newpost {
+  display: none;
+}
+
 .form-group input {
   background: none;
   font-size: 1.0rem;
@@ -129,7 +133,14 @@ a {
   height: 45% !important;
 }
 
+.ban_container {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
 
 #feedtype {
   display: none;
+}
+
+.ban {
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
 }

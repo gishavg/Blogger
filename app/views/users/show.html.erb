@@ -63,10 +63,12 @@
     </div>
     <div>
       <% if current_user == @user %>
-        <%= button_to 'New Post', new_user_post_path(@user.id), method: :get, class:"p-2 bg-success w-100", remote:true %>
+        <span class="btn bg-success w-100 new text-light">New Post </span>
       <% end %>
     </div>
-    <div class= "newpost"></div>
+    <div class= "newpost">
+      <%= render partial: 'post/new'%>
+    </div>
     <div class="h6 p-3 lead">
       <% if current_user.admin? %>
         <div class="d-inline-block float-left">

@@ -1,46 +1,65 @@
 <header class="m-3 navbar navbar-inverse bg-dark text-primary">
-  <div class="p-3 d-inline-block sign_up_navbar">
-    <span class="p-3 nav_color lead"><%= link_to "My Profile", current_user, method: :get %></span>
-    <span class="p-3 nav_color"><%= render 'devise/menu/registration_items'%></span>
-    <span class="p-3 nav_color"><%= render 'devise/menu/login_items' %></span>
+  <div class="p-1 d-inline-block sign_up_navbar w-100">
+    <h3 class="float-left col-sm-9"><%= current_user.first_name + " " + current_user.last_name %></h3>
+    <button type="button" class="col-sm-3 btn btn-dark">
+      <a class="dropdown-toggle" href="#" id="navbardrop" class="logout float-right" data-toggle="dropdown">
+        <span><img src="<%= asset_path( 'logoout.png' ) %>", class="logoutimage bg-light" /></span>
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">
+          <span class="p-3 nav_color"><%= render 'devise/menu/registration_items'%></span>
+        </a>
+        <a class="dropdown-item" href="#">
+          <span class="p-3 nav_color"><%= render 'devise/menu/login_items' %></span>
+        </a>
+      </div>
+    </button>
   </div>
 </header>
 <div id="link_path">
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to "My Profile", current_user, method: :get %></li>
     <li class="breadcrumb-item active" aria-current="page">Home</li>
   </ol>
 </nav>
 </div>
-<h3 class="text-center"><%= current_user.first_name + " " + current_user.last_name %></h3>
-<table class="m-3 p-3">
-  <tr>
-    <th>Active Users</th>
-  </tr>
-  <% @user.each do |user| %>
-    <tr>
-      <% if current_user.email != user.email %>
-        <td class="p-3"><%= user.email %></td>
-        <td class="p-3"><%= link_to "View Profile", user_path(user.id) %></td>
-        <td class="p-3"><%= link_to "Remove User", user_path(user), data: { confirm: "Are you sure?" }, method: :delete %></td>
-        <% if user.admin? %>
-          <td class="p-3"><%= link_to "cancel Admin_Role", admin_access_user_path(user), data: { confirm: "Are you sure?" }, method: :post %></td>
-        <% else %>
-          <td class="p-3"><%= link_to "Assign Admin_Role", admin_access_user_path(user), data: { confirm: "Are you sure?" }, method: :post %></td>
-        <% end %>
-        <% if user.banned? %>
-          <td class="p-3"><%= link_to "Unban User", ban_user_user_path(user), data: { confirm: "Are you sure?" }, method: :post %></td>
-        <% else %>
-          <td class="p-3"><%= link_to "Ban User", admin_ban_user_user_path(user), method: :get %></td>
-        <% end %>
-        <% if user.admin? %>
-          <td class="p-3 text-success"><%= "Admin" %></td>
-        <% end %>
-        <% if user.banned? %>
-          <td class="p-3 text-danger"><%= "Banned" %></td>
-        <% end %>
-        <!-- <td class="p-3"><%= link_to "Edit User", user_path(user.id) %></td> -->
+<div class="container-fluid row">
+  <div class="col-sm-9">
+    <table class="m-3 p-3">
+      <tr>
+        <th>Active Users</th>
+      </tr>
+      <% @user.each do |user| %>
+        <tr>
+          <% if current_user.email != user.email %>
+            <td class="p-3"><span class="d-flex justify-content-center"><img src="<%= asset_path( 'download.jpeg' ) %>", class="logout_image bg-light " /></span></td>
+            <td class="p-3 lead"><%= user.first_name %>  <%= user.last_name %></td>
+            <td class="p-3"><%= link_to "View Profile", user_path(user.id) %></td>
+            <td class="p-3"><%= link_to "Remove User", user_path(user), data: { confirm: "Are you sure?" }, method: :delete %></td>
+            <% if user.admin? %>
+              <td class="p-3"><%= link_to "cancel Admin_Role", admin_access_user_path(user), data: { confirm: "Are you sure?" }, method: :post %></td>
+            <% else %>
+              <td class="p-3"><%= link_to "Assign Admin_Role", admin_access_user_path(user), data: { confirm: "Are you sure?" }, method: :post %></td>
+            <% end %>
+            <% if user.banned? %>
+              <td class="p-3"><%= link_to "Unban User", ban_user_user_path(user), data: { confirm: "Are you sure?" }, method: :post %></td>
+            <% else %>
+              <td class="p-3"><%= link_to "Ban User", admin_ban_user_user_path(user), method: :get, remote:true %></td>
+            <% end %>
+            <% if user.admin? %>
+              <td class="p-3 text-success"><%= "Admin" %></td>
+            <% end %>
+            <% if user.banned? %>
+              <td class="p-3 text-danger"><%= "Banned" %></td>
+            <% end %>
+            <!-- <td class="p-3"><%= link_to "Edit User", user_path(user.id) %></td> -->
+          <% end %>
+        </tr>
       <% end %>
-    </tr>
-  <% end %>
-</table>
+    </table>
+  </div>
+  <div class="col-sm-3 ban" id="banform">
+
+  </div>
+</div>

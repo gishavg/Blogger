@@ -1,5 +1,5 @@
 <div class="">
-  <%= form_with scope: :post, url: user_post_index_path, class:"form_container", remote:true, local: true do |form| %>
+  <%= form_with scope: :post, url: user_post_index_path(current_user.id), class:"form_container",method:"post", remote:true, local: true do |form| %>
   <table class="table_container">
     <tr class="row_container">
       <div class="form-group">

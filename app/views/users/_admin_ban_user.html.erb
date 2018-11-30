@@ -1,0 +1,10 @@
+<div class="container col-sm-12 ban_container m-3 p-3">
+  <%= form_with scope: :user, url:  ban_user_user_path(@user.id), local: true do |form| %>
+  	<p>
+  		<%= form.number_field :ban_period, class:"ban_period col-sm-12 m-3", placeholder:"Ban Duration" %>
+  	</p>
+  	<p>
+  		<%= form.submit :Ban_User, class:"btn text-center w-100 m-3 btn-success" %>
+  	</p>
+  <% end %>
+</div>

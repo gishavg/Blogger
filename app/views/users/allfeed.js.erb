@@ -1,17 +1,18 @@
 $(".show").html("<%=escape_javascript (render 'users/showpost',  posts: @posts, user: @user)  %>");
 $("#feedtype").val("1");
-
-    y = $('.pagination li a')
-    y.each(function( index ) {
-      console.log("asdas")
-      y[index].setAttribute("data-remote",true)
-      url = y[index].getAttribute("href")
-      page=""
-      if (url.includes('?')){
-        page = url.split("?")[1]
-      }
-      url = "/users/<%=@user.id %>/allfeed?" + page
-      console.log(url)
-      y[index].setAttribute("href",url)
-
-    });
+    //
+    // y = $('.pagination li a')
+    // y.each(function( index ) {
+    //   console.log("asdas")
+    //   y[index].setAttribute("data-remote",true)
+    //   url = y[index].getAttribute("href")
+    //   page=""
+    //   if (url.includes('?')){
+    //     page = url.split("?")[1]
+    //   }
+    //   url = "/users/<%=@user.id %>/allfeed?" + page
+    //   console.log(url)
+    //   y[index].setAttribute("href",url)
+    //
+    // });
+$('.pagination a').attr('data-remote', 'true');
