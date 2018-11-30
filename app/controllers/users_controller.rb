@@ -20,7 +20,6 @@ class UsersController < ApplicationController
     @p = Post.all.order('created_at DESC').where('private IS ?', false)
     @posts = @posts | @p
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
-
   end
 
   def allfeed
@@ -43,20 +42,99 @@ class UsersController < ApplicationController
       posts = user.posts.all.order('created_at DESC')
       @posts += posts if posts
     end
-    @posts = @posts | @p
+    @posts = @p + @posts
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
     respond_to do |format|
       format.js
     end
   end
 
-  def lastday
+  def filterby
+    @user = User.find(params[:user_id])
 
+    if params[:post] == "1" || params[:post] == ""
+      @type = "allfeed"
+      if params[:type] == "lastday"
+        @posts = @user.posts.all.order('created_at DESC').where("DATE(created_at) = ?", Date.today-1)
+        @p = Post.all.order('created_at DESC').where('private IS ?', false).where("DATE(created_at) = ?", Date.today-1)
+        p @posts = @posts | @p
+      elsif params[:type] == "lastweek"
+        @posts = @user.posts.all.order('created_at DESC').where("created_at >= ?", 1.week.ago.utc).order("created_at DESC")
+        @p = Post.all.order('created_at DESC').where('private IS ?', false).where("created_at >= ?", 1.week.ago.utc).order("created_at DESC")
+        p @posts = @posts | @p
+      elsif params[:type] == "lastmonth"
+        @posts = @user.posts.all.order('created_at DESC').where('created_at BETWEEN ? AND ? ', DateTime.now.beginning_of_month - 1.month, DateTime.now.beginning_of_month)
+        @p = Post.all.order('created_at DESC').where('private IS ?', false).where('created_at BETWEEN ? AND ? ', DateTime.now.beginning_of_month - 1.month, DateTime.now.beginning_of_month)
+        p @posts = @posts | @p
+      else
+
+      end
+    else
+      @type = "personalfeed"
+      if params[:type] == "lastday"
+        @p = @user.posts.all.order('created_at DESC').where("DATE(created_at) = ?", Date.today-1)
+        @u = @user.following
+        @posts = []
+        @u.each do |user|
+          posts = user.posts.all.order('created_at DESC').where("DATE(created_at) = ?", Date.today-1)
+          @posts += posts if posts
+        end
+        @posts = @posts | @p
+      elsif params[:type] == "lastweek"
+        @p = @user.posts.all.order('created_at DESC').where("created_at >= ?", 1.week.ago.utc).order("created_at DESC")
+        @u = @user.following
+        @posts = []
+        @u.each do |user|
+          posts = user.posts.all.order('created_at DESC').where("created_at >= ?", 1.week.ago.utc).order("created_at DESC")
+          @posts += posts if posts
+        end
+        @posts = @posts | @p
+      elsif params[:type] == "lastmonth"
+        @p = @user.posts.all.order('created_at DESC').where('created_at BETWEEN ? AND ? ', DateTime.now.beginning_of_month - 1.month, DateTime.now.beginning_of_month)
+        @u = @user.following
+        @posts = []
+        @u.each do |user|
+          posts = user.posts.all.order('created_at DESC').where('created_at BETWEEN ? AND ? ', DateTime.now.beginning_of_month - 1.month, DateTime.now.beginning_of_month)
+          @posts += posts if posts
+        end
+        @posts = @posts | @p
+      else
+
+      end
+
+    end
+    @posts = @posts.paginate(:page => params[:page], :per_page => 2)
+    respond_to do |format|
+      format.js
+    end
   end
 
   def edit
   end
 
+  def sortbylike
+    if params[:post] == "1" || params[:post] == ""
+      @type = "allfeed"
+      @user = User.find(params[:user_id])
+      @posts = @user.posts.sort_by { |post| post.likes.count }.reverse
+      @p = Post.all.where('private IS ?', false).sort_by { |post| post.likes.count }.reverse
+    else
+      @type = "personalfeed"
+      @user = User.find(params[:user_id])
+      @p = @user.posts.all.sort_by { |post| post.likes.count }.reverse
+      @u = @user.following
+      @posts = []
+      @u.each do |user|
+        posts = user.posts.all.sort_by { |post| post.likes.count }.reverse
+        @posts += posts if posts
+      end
+    end
+    @posts = @p + @posts
+    @posts = @posts.paginate(:page => params[:page], :per_page => 2)
+    respond_to do |format|
+      format.js
+    end
+  end
   def admin_access
     @user = User.find(params[:id])
     if @user.admin?
@@ -108,19 +186,15 @@ class UsersController < ApplicationController
     @p = Post.all.order('created_at DESC').where('private IS ? and title LIKE ? or body LIKE ?', false, q, q)
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
     @posts = @posts | @p
-    unless @posts.any?
-      search_user(params[:key])
-    end
     respond_to do |format|
       format.js
     end
   end
 
-  def search_user(key)
-    p key
+  def searchuser
     p "+++++++++++++++++++++++++++++++++"
-    q = "%#{params[:key]}%"
-    @user = User.all.where("first_name LIKE ? or last_name LIKE ? or email LIKE ?", q, q, q)
+    p q = "%#{params[:key][1..-1]}%"
+    p @user = User.all.where("first_name LIKE ? or last_name LIKE ? or email LIKE ?", q, q, q)
     respond_to do |format|
       format.js
     end

@@ -1,5 +1,4 @@
 $(".show").html("<%=escape_javascript (render 'users/showpost',  posts: @posts, user: @user)  %>");
-$("#feedtype").val("2");
 y = $('.pagination li a')
 y.each(function( index ) {
   console.log("asdas")
@@ -9,7 +8,7 @@ y.each(function( index ) {
   if (url.includes('?')){
     page = url.split("?")[1]
   }
-  url = "/users/<%=@user.id %>/personalfeed?" + page
+  url = "/users/<%=@user.id %>/<%=@type%>?" + page
   console.log(url)
   y[index].setAttribute("href",url)
 

@@ -1,5 +1,5 @@
 <div class="">
-  <%= form_with scope: :post, url: user_post_index_path, class:"form_container", local: true do |form| %>
+  <%= form_with scope: :post, url: user_post_index_path, class:"form_container", remote:true, local: true do |form| %>
   <table class="table_container">
     <tr class="row_container">
       <div class="form-group">
@@ -30,7 +30,7 @@
     <tr class="row_container">
       <td>
         <div class="p-2 form-inline">
-          <%= form.label :private, placeholder:"Private", class:"m-2" %>
+          <%= form.label :private, placeholder:"Private", class:"m-1" %>
           <%= form.check_box :private, class:"w-25 form-control checkbox" %>
         </div>
       </td>

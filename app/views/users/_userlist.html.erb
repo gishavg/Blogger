@@ -1,0 +1,4 @@
+<!-- <button type="button" class="p-2 btn"> -->
+  <%= select_tag :user_id, options_for_select(@user.collect {|user| [ user['first_name'] ,
+      user_path(user.id) ] }),{ prompt: 'User List', class:'w-100 userlist', size:5, :onchange => "change_user(this.value)" } %>
+<!-- </button> -->

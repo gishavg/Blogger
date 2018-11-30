@@ -1,11 +1,7 @@
 <header class="m-1 navbar bg-dark">
-  <div class="d-inline-block sign_up_navbar col-sm-12 ">
-    <div class="d-inline-block p-3 search col-sm-4">
-      <%= text_field_tag 'search', nil, user_id: current_user.id, placeholder: "Search ( Tag:#tagname, post:samplekey )", class:"search w-100 p-2", onkeyup:"searchKey()", onsubmit:"searchKey()", autofocus:true, remote:true %>
-      
-    </div>
-    <button type="button" class="col-sm-2 btn btn-dark float-right">
-      <a class="dropdown-toggle" href="#" id="navbardrop" class="logout" data-toggle="dropdown">
+  <div class="col-sm-2 flex-row">
+    <button type="button" class="col-sm-2 btn btn-dark">
+      <a class="dropdown-toggle" href="#" id="navbardrop" class="logout float-right" data-toggle="dropdown">
         <span><img src="<%= asset_path( 'logoout.png' ) %>", class="logoutimage bg-light" /></span>
       </a>
       <div class="dropdown-menu">
@@ -13,24 +9,31 @@
           <%= link_to('Edit Profile', edit_user_registration_path) %>
         </a>
         <a class="dropdown-item" href="#">
-            <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+          <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
         </a>
       </div>
     </button>
   </div>
+  <div class="col-sm-10">
+    <form class="float-right">
+      <input type="text" placeholder="Search.." name="search" id="search" onsubmit="searchKey()" user_id="<%= current_user.id%>" onkeyup="searchKey()" autofocus=true, remote=true>
+      <i class="fa fa-search text-light" style="font-size:20px;"></i>
+    </form>
+  </div>
 </header>
+
+<div class="d-inline-block searchuser w-100 col-sm-12">
+</div>
 
 <div class="m-2 container-fluid main_container">
   <div class="profile_container col-sm-3 border-right">
     <div class="profile">
       <div class="logo_name">
-        <h5>
-          <span><img src="<%= asset_path( 'Blogger.png' ) %>", class="logo_image" /></span>
-          <span><%= @user.first_name  + " " + @user.last_name %></span>
+        <span class="d-flex justify-content-center"><img src="<%= asset_path( 'download.jpeg' ) %>", class="logout_image bg-light " /></span>
+        <h5 class="d-flex justify-content-center">
+          <div><%= @user.first_name  + " " + @user.last_name %></div>
         </h5>
-      </div>
-      <div>
-        <h6 class="text-primary p-2"><%= @user.email %></h6>
+        <h6 class="text-primary p-2 d-flex justify-content-center"><%= @user.email %></h6>
       </div>
     </div>
     <div class="follow">
@@ -84,26 +87,22 @@
         </nav>
       </div>
     <% else %>
-    <div class="btn-group btn-group-sm">
+    <input type="text" id="feedtype" name="feedtype"></input>
+    <div class="btn-group btn-group-sm" id="buttoncontainer">
       <button type="button" class="p-3 btn btn-dark">
-        <%= link_to "All Feed", user_allfeed_path(@user), method: :get, remote:true, class:"text-light" %>
+        <%= link_to "All Feed", user_allfeed_path(@user), method: :get, remote:true, class:"text-light", id:"allfeed" %>
       </button>
       <button type="button" class="p-2 btn btn-dark">
-        <%= link_to "Personal Feed", user_personalfeed_path(@user), method: :get, remote:true, class:"text-light" %>
-
+        <%= link_to "Personal Feed", user_personalfeed_path(@user), method: :get, remote:true, class:"text-light", id:"personalfeed"%>
       </button>
       <button type="button" class="p-2 btn btn-dark">
         <a class="dropdown-toggle" href="#" id="navbardrop" class="allfeed" data-toggle="dropdown">
           <span class="allfeed">Filter by</span>
         </a>
         <div class="dropdown-menu">
-          <%= link_to "Last Day", user_lastday_path(@user), method: :get, remote:true, class:"text-dark" %>
-
-          <a class="dropdown-item" href="#">Last Day</a>
-          <a class="dropdown-item" href="#">Last Week</a>
-          <a class="dropdown-item" href="#">Month</a>
-          <a class="dropdown-item" href="#">Year</a>
-
+          <a class="dropdown-item" remote=true id="lastday" user_id="<%= @user.id %>" type="lastday">Last Day</a>
+          <a class="dropdown-item" remote=true id="lastweek" user_id="<%= @user.id %>" type="lastweek">Last Week</a>
+          <a class="dropdown-item" remote=true id="lastmonth" user_id="<%= @user.id %>" type="lastmonth">Month</a>
         </div>
       </button>
       <button type="button" class="p-2 btn btn-dark">
@@ -111,26 +110,16 @@
           <span class="allfeed">Sort by</span>
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Time</a>
-          <a class="dropdown-item" href="#">Likes</a>
-          <a class="dropdown-item" href="#">Views</a>
+          <a class="dropdown-item" remote=true id="sortbylike" user_id="<%= @user.id %>">Likes</a>
         </div>
       </button>
-
     </div>
     <% end %>
     <div><p><div id="log">
-
     </div></p></div>
     <div class="container-fluid main_post_container">
         <div class="show">
-
           <%= render partial: 'showpost', locals: { posts: @posts } %>
-        </div>
-        <div >
-          <div class="p-3 float-right m-3">
-            <%= will_paginate @posts, renderer: BootstrapPagination::Rails  %>
-          </div>
         </div>
     </div>
   </div>
