@@ -1,8 +1,11 @@
 class PostController < ApplicationController
   def create
-    @post = current_user.posts.new(post_params)
-    if @post.save
-      redirect_to user_path(params[:user_id])
+    @user = User.find(params[:user_id])
+    @posts = current_user.posts.new(post_params)
+    if @posts.save
+      respond_to do |format|
+        format.js
+      end
     else
       redirect_to new_user_post_path(params[:user_id])
     end

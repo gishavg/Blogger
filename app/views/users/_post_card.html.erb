@@ -56,9 +56,9 @@
     </div>
     <div class="p-2 col-sm-6 d-flex flex-row-reverse like_<%= post.id %>">
       <% if post.likes.where(user_id:current_user.id).to_a !=[] %>
-        <%= render partial: 'unlike', locals: { post: post } %>
+        <%= render partial: '/users/unlike', locals: { post: post } %>
       <% else  %>
-        <%= render partial: 'like', locals: { post: post } %>
+        <%= render partial: '/users/like', locals: { post: post } %>
       <% end %>
 
     </div>

@@ -182,7 +182,7 @@ class UsersController < ApplicationController
     end
     @p = Post.all.order('created_at DESC').where('private IS ? and title LIKE ? or body LIKE ?', false, q, q)
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
-    @posts = @posts | @p
+    p @posts = @posts | @p
     respond_to do |format|
       format.js
     end

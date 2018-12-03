@@ -1,5 +1,5 @@
 <div class="">
-  <%= form_with scope: :post, url: user_post_index_path(current_user.id), class:"form_container",method:"post", remote:true, local: true do |form| %>
+  <%= form_with scope: :post, url: user_post_index_path(current_user.id), class:"form_container",method:"post" do |form| %>
   <table class="table_container">
     <tr class="row_container">
       <div class="form-group">
@@ -19,7 +19,7 @@
     </tr>
     <tr class="row_container">
     <div class="p-2 form-group large-10 large-centered columns">
-      <td><%= form.text_field :all_tags, placeholder: "Tags separated with comma" , class:"form-control" %></td>
+      <td><%= form.text_field :all_tags, placeholder: "Tags  #tag1, #tag2..." , class:"form-control" %></td>
     </div>
     </tr>
     <tr class="row_container">
@@ -40,7 +40,6 @@
       <td><%= form.submit :createpost, class:"p-2 w-100 bg-primary" %></td>
     </div>
     </tr>
-
   </table>
   <% end %>
 </div>

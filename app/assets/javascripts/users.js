@@ -1,42 +1,3 @@
-// $( document ).on('turbolinks:load', function() {
-//     let x = $('.pagination li a')
-//     x.each(function( index ) {
-//       console.log("asdas")
-//       x[index].setAttribute("data-remote",true)
-//       //x[index].setAttribute("data-method","get")
-//       let url = x[index].getAttribute("href")
-//       page=""
-//       if (url.includes('?')){
-//         page = url.split("?")[1]
-//       }
-//       url = "/users/27/allfeed?" + page
-//       console.log(url)
-//       x[index].setAttribute("href",url)
-//
-//     });
-// });
-// 
-// $( document ).on('turbolinks:load', function() {
-//
-//     $('.show').load(function(){
-//       let x = $('.pagination li a')
-//       x.each(function( index ) {
-//         console.log("asdas")
-//           x[index].setAttribute("data-remote",true)
-//           //x[index].setAttribute("data-method","get")
-//           let url = x[index].getAttribute("href")
-//           page=""
-//           if (url.includes('?')){
-//             page = url.split("?")[1]
-//           }
-//         // base_url = url.split("?")[0]
-//         // url = base_url + page
-//         console.log(url)
-//         x[index].setAttribute("href",url)
-//         });
-//     });
-// });
-
 $(document).on('click','.new',function() {
   jQuery('.newpost').toggle('show');
 });
@@ -70,7 +31,6 @@ $(document).on('click','.unlike',function() {
 
 $(document).on('click','#lastday',function() {
   var x = $('#feedtype').val();
-  alert(x)
   user_id=this.getAttribute("user_id");
   type = this.getAttribute("type");
   url = "/users/"+this.getAttribute("user_id")+"/filterby";
@@ -83,7 +43,6 @@ $(document).on('click','#lastday',function() {
 
 $(document).on('click','#lastweek',function() {
   var x = $('#feedtype').val();
-  alert(x)
   user_id=this.getAttribute("user_id");
   type = this.getAttribute("type");
   url = "/users/"+this.getAttribute("user_id")+"/filterby";
@@ -96,7 +55,6 @@ $(document).on('click','#lastweek',function() {
 
 $(document).on('click','#lastmonth',function() {
   var x = $('#feedtype').val();
-  alert(x)
   user_id=this.getAttribute("user_id");
   type = this.getAttribute("type");
   url = "/users/"+this.getAttribute("user_id")+"/filterby";
@@ -109,7 +67,6 @@ $(document).on('click','#lastmonth',function() {
 
 $(document).on('click','#lastyear',function() {
   var x = $('#feedtype').val();
-  alert(x)
   user_id=this.getAttribute("user_id");
   type = this.getAttribute("type");
   url = "/users/"+this.getAttribute("user_id")+"/filterby";
@@ -134,19 +91,18 @@ function searchKey() {
       })
     }
     else {
-      document.getElementById("user_id").style.display = "none";
       url = "/users/search"
       $.ajax({
         url: url,
         method: "GET",
         data: {key: search_key,user_id: user_id}
       })
+      document.getElementById("user_id").style.display = "none";
     }
 }
 
 $(document).on('click','#sortbylike',function() {
   var x = $('#feedtype').val();
-  alert(x)
   user_id=this.getAttribute("user_id");
   url = "/users/"+this.getAttribute("user_id")+"/sortbylike";
   $.ajax({

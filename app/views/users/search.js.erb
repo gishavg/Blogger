@@ -1,1 +1,2 @@
 $(".show").html("<%=escape_javascript (render 'users/showpost',  posts: @posts, user: @user)  %>");
+$('.pagination a').attr('data-remote', 'true');

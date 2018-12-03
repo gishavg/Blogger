@@ -1,6 +1,3 @@
 <% posts.each do |post| %>
     <%= render partial: 'post_card', locals: { post: post } %>
 <% end %>
-<div class="p-3 float-right m-3">
-  <%= will_paginate @posts %>
-</div>

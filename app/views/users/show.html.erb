@@ -121,7 +121,11 @@
     </div></p></div>
     <div class="container-fluid main_post_container">
         <div class="show">
+          <div class="shownewpost"></div>
           <%= render partial: 'showpost', locals: { posts: @posts } %>
+        </div>
+        <div class="p-3 float-right m-3">
+          <%= will_paginate @posts %>
         </div>
     </div>
   </div>
